@@ -47,7 +47,7 @@ class CommandBan: CommandExecutor {
                 }
                 arg = list.clone()
             }
-            val uuid = BaseMojangAPI.getUniqueId(arg[0])
+            val uuid = BaseMojangAPI.getUniqueId(arg.shift()!!)
             if (uuid == null) {
                 sender.sendMessage(Message.NO_PLAYER)
                 return@t
@@ -66,9 +66,9 @@ class CommandBan: CommandExecutor {
             }
             val reason = arg.join(" ")
             if (expiresAt == -1L) {
-                APILocalBan(token!!, reason, uuid, if (sender is Player) sender.uniqueId else server!!.owner.uuid)
+                APILocalBan(token!!, reason, uuid, if (sender is Player) sender.uniqueId else server!!.owner.uuid).execute()
             } else {
-                APITempBan(token!!, reason, uuid, if (sender is Player) sender.uniqueId else server!!.owner.uuid, expiresAt)
+                APITempBan(token!!, reason, uuid, if (sender is Player) sender.uniqueId else server!!.owner.uuid, expiresAt).execute()
             }
             sender.sendMessage(String.format(Message.BANNED_PLAYER, player, reason))
         }.start()

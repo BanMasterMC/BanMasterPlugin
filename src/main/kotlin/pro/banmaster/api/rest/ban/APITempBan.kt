@@ -15,7 +15,7 @@ class APITempBan(token: String, reason: String, target: UUID, punisher: UUID, ex
             .put("reason", reason)
             .put("target", target.noHyphens()) // todo: change to user id?
             .put("punisher", punisher.noHyphens())
-            .put("expires", expires),
+            .put("expires", (expires/1000F).toLong()),
     ).build()
 ) {
     override fun execute(): Ban = Ban.parseResponse(executeAPI())
