@@ -12,6 +12,6 @@ class BanMasterPlugin: BanMasterAPIImpl() {
 
     private fun conflicts(plugin: String) {
         if (Bukkit.getPluginManager().getPlugin(plugin) != null)
-            throw RuntimeException("plugin '$plugin' is incompatible with this plugin. Please remove the plugin and restart the server.")
+            throw RuntimeException("'$plugin'はこのプラグインとは非対応です。${plugin}を削除してサーバーを再起動してください。")
     }
 }
