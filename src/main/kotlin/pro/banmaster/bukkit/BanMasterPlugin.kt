@@ -5,6 +5,7 @@ import org.bukkit.plugin.ServicePriority
 import pro.banmaster.api.BanMasterAPI
 import pro.banmaster.api.rest.misc.APIVerifyToken
 import pro.banmaster.api.struct.Server
+import pro.banmaster.bukkit.commands.CommandBan
 import pro.banmaster.bukkit.config.ConfigProvider
 import pro.banmaster.common.localization.Message
 import java.util.logging.Logger
@@ -16,13 +17,20 @@ class BanMasterPlugin: BanMasterAPIImpl() {
         lateinit var log: Logger
         var invalidToken = false
         var server: Server? = null
+        var enforceAdminList = false
     }
 
     override fun onEnable() {
         log = logger
         conflicts("MCBans", "コマンドの競合")
         Bukkit.getServicesManager().register(BanMasterAPI::class.java, this, this, ServicePriority.Normal)
+        Bukkit.getPluginCommand("ban").executor = CommandBan()
+        reload()
+    }
+
+    private fun reload() {
         conf = ConfigProvider.getConfig("./plugins/BanMaster/config.yml")
+        if (conf.getBoolean("enforceAdminList")) enforceAdminList = true
         token = conf.getString("token")
         if (token == null) {
             invalidToken = true
