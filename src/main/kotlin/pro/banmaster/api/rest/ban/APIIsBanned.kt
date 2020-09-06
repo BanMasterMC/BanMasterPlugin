@@ -8,6 +8,4 @@ class APIIsBanned(token: String, uuid: UUID): APIRequest(
     "/isbanned",
     "POST",
     BodyBuilder().setJSON(JSONObject().append("token", token).append("uuid", uuid.toString().replace("-", ""))).build()
-) {
-    override fun execute(): Response<JSONObject> = call(JSONObject::class.java)
-}
+)

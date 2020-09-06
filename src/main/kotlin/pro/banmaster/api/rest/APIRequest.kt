@@ -1,5 +1,6 @@
 package pro.banmaster.api.rest
 
+import org.json.JSONObject
 import util.JSONAPI
 
 abstract class APIRequest: JSONAPI {
@@ -11,5 +12,5 @@ abstract class APIRequest: JSONAPI {
         const val ENDPOINT = "https://api.banmaster.pro/v1"
     }
 
-    abstract fun execute(): Any
+    fun execute(): Response<JSONObject> = call(JSONObject::class.java)
 }

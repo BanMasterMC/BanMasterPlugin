@@ -14,6 +14,4 @@ class APILocalBan(token: String, reason: String, target: User, punisher: User): 
             .append("target", target.uuid.toString().replace("-", "")) // todo: change to user id?
             .append("punisher", punisher.uuid.toString().replace("-", ""))
     ).build()
-) {
-    override fun execute(): Response<JSONObject> = call(JSONObject::class.java)
-}
+)
