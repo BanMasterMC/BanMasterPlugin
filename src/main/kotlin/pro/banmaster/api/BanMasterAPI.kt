@@ -7,9 +7,11 @@ import java.util.*
 interface BanMasterAPI {
     companion object {
         fun getAPI(): BanMasterAPI? = Bukkit.getServicesManager().getRegistration(BanMasterAPI::class.java)?.provider
+
+        fun getInstance(): BanMasterAPI = (Bukkit.getServicesManager().getRegistration(BanMasterAPI::class.java) ?: throw RuntimeException("BanMaster plugin isn't loaded!")).provider
     }
 
-    fun createWarn(id: Long, server: Server, target: User, punisher: User, reason: String, timestamp: Long): Warn
+    fun createWarn(id: Int, server: Server, target: User, punisher: User, reason: String, timestamp: Long): Warn
 
     fun createAdminEntry(server: Server, user: User): AdminEntry
 
@@ -29,8 +31,8 @@ interface BanMasterAPI {
     fun createServer(id: Int,
                      name: String,
                      owner: User,
-                     rule: String,
-                     address: String,
+                     rule: String?,
+                     address: String?,
                      token: String?,
                      private: Boolean,
                      admin: Boolean,
@@ -59,6 +61,6 @@ interface BanMasterAPI {
                    timestamp: Long,
                    expiresAt: Long?,
                    cancelled: Boolean,
-                   cancel_player: User?,
+                   cancelPlayer: User?,
                    type: MuteType): Mute
 }

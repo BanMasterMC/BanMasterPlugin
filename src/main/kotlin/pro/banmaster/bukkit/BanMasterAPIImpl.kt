@@ -8,7 +8,7 @@ import java.util.*
 
 abstract class BanMasterAPIImpl: JavaPlugin(), BanMasterAPI {
     override fun createWarn(
-        id: Long,
+        id: Int,
         server: Server,
         target: User,
         punisher: User,
@@ -37,8 +37,8 @@ abstract class BanMasterAPIImpl: JavaPlugin(), BanMasterAPI {
         id: Int,
         name: String,
         owner: User,
-        rule: String,
-        address: String,
+        rule: String?,
+        address: String?,
         token: String?,
         private: Boolean,
         admin: Boolean,
@@ -63,15 +63,15 @@ abstract class BanMasterAPIImpl: JavaPlugin(), BanMasterAPI {
     ): Ban = BanImpl(id, player, punisher, server, type, reason, timestamp, expiresAt, unbanner, unbanned, verified)
 
     override fun createMute(
-        id: Int,
-        player: User,
-        server: Server,
-        executer: User,
-        reason: String,
-        timestamp: Long,
-        expiresAt: Long?,
-        cancelled: Boolean,
-        cancel_player: User?,
-        type: MuteType
-    ): Mute = MuteImpl(id, player, server, executer, reason, timestamp, expiresAt, cancelled, cancel_player, type)
+            id: Int,
+            player: User,
+            server: Server,
+            executer: User,
+            reason: String,
+            timestamp: Long,
+            expiresAt: Long?,
+            cancelled: Boolean,
+            cancelPlayer: User?,
+            type: MuteType
+    ): Mute = MuteImpl(id, player, server, executer, reason, timestamp, expiresAt, cancelled, cancelPlayer, type)
 }

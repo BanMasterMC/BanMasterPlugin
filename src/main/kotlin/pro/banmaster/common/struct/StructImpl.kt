@@ -10,7 +10,7 @@ import java.util.UUID
  * @param reason the reason of this warn
  */
 class WarnImpl(
-    override val id: Long,
+    override val id: Int,
     override val server: Server,
     override val target: User,
     override val punisher: User,
@@ -150,8 +150,8 @@ class ServerImpl(
     override val id: Int,
     override val name: String,
     override val owner: User,
-    override val rule: String,
-    override val address: String,
+    override val rule: String?,
+    override val address: String?,
     override val token: String?,
     override val private: Boolean,
     override val admin: Boolean,
@@ -228,16 +228,16 @@ class BanImpl(
  * @param type whether this mute is local or global (if global, the player will be unable to speak on all servers)
  */
 class MuteImpl(
-    override val id: Int,
-    override val player: User,
-    override val server: Server,
-    override val executer: User,
-    override val reason: String,
-    override val timestamp: Long,
-    override val expiresAt: Long?,
-    override val cancelled: Boolean,
-    override val cancel_player: User?,
-    override val type: MuteType
+        override val id: Int,
+        override val player: User,
+        override val server: Server,
+        override val executer: User,
+        override val reason: String,
+        override val timestamp: Long,
+        override val expiresAt: Long?,
+        override val cancelled: Boolean,
+        override val cancelPlayer: User?,
+        override val type: MuteType
 ): Struct, Mute {
     companion object {
         /**

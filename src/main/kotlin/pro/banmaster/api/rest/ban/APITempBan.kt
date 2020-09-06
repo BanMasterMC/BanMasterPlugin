@@ -6,8 +6,8 @@ import pro.banmaster.api.struct.Ban
 import pro.banmaster.api.struct.noHyphens
 import java.util.UUID
 
-class APIGlobalBan(token: String, reason: String, target: UUID, punisher: UUID): APIRequest(
-    "/gban",
+class APITempBan(token: String, reason: String, target: UUID, punisher: UUID, timestamp: Long): APIRequest(
+    "/tban",
     "POST",
     BodyBuilder().setJSON(
         JSONObject()
@@ -15,6 +15,7 @@ class APIGlobalBan(token: String, reason: String, target: UUID, punisher: UUID):
             .append("reason", reason)
             .append("target", target.noHyphens()) // todo: change to user id?
             .append("punisher", punisher.noHyphens())
+            .append("timestamp", timestamp),
     ).build()
 ) {
     override fun execute(): Ban = Ban.parseResponse(executeAPI())

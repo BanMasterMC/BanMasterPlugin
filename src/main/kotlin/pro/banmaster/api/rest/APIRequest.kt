@@ -1,6 +1,7 @@
 package pro.banmaster.api.rest
 
 import org.json.JSONObject
+import pro.banmaster.api.struct.preprocessResponse
 import util.JSONAPI
 
 abstract class APIRequest: JSONAPI {
@@ -12,5 +13,7 @@ abstract class APIRequest: JSONAPI {
         const val ENDPOINT = "https://api.banmaster.pro/v1"
     }
 
-    fun execute(): Response<JSONObject> = call(JSONObject::class.java)
+    protected fun executeAPI(): Response<JSONObject> = call(JSONObject::class.java)
+
+    open fun execute(): Any = preprocessResponse(call(JSONObject::class.java))
 }
