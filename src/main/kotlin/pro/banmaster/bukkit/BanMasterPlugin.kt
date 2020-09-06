@@ -6,6 +6,7 @@ import pro.banmaster.api.BanMasterAPI
 import pro.banmaster.api.rest.misc.APIVerifyToken
 import pro.banmaster.api.struct.Server
 import pro.banmaster.bukkit.commands.CommandBan
+import pro.banmaster.bukkit.commands.CommandGBan
 import pro.banmaster.bukkit.config.ConfigProvider
 import pro.banmaster.bukkit.listeners.PlayerListener
 import pro.banmaster.common.localization.Message
@@ -28,6 +29,7 @@ class BanMasterPlugin: BanMasterAPIImpl() {
         Bukkit.getServicesManager().register(BanMasterAPI::class.java, this, this, ServicePriority.Normal)
         Bukkit.getPluginManager().registerEvents(PlayerListener(), this)
         Bukkit.getPluginCommand("ban").executor = CommandBan()
+        Bukkit.getPluginCommand("gban").executor = CommandGBan()
         reload()
     }
 

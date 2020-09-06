@@ -164,6 +164,8 @@ interface Ban: Struct {
             return parse(response.response.getJSONObject("DATA"))
         }
     }
+
+    fun getKickMessage(): String
 }
 
 interface Mute: Struct {

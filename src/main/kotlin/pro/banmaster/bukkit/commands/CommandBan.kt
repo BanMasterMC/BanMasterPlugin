@@ -7,6 +7,7 @@ import org.bukkit.entity.Player
 import pro.banmaster.api.rest.ban.APILocalBan
 import pro.banmaster.api.rest.ban.APITempBan
 import pro.banmaster.api.rest.misc.APIAdminCheck
+import pro.banmaster.bukkit.BanMasterPlugin
 import pro.banmaster.bukkit.BanMasterPlugin.Companion.enforceAdminList
 import pro.banmaster.bukkit.BanMasterPlugin.Companion.server
 import pro.banmaster.bukkit.BanMasterPlugin.Companion.token
@@ -29,7 +30,7 @@ class CommandBan: CommandExecutor {
                     return@t
                 }
             }
-            if (args.isEmpty()) {
+            if (args.size < 2) {
                 sender.sendMessage(Message.NO_ARGUMENT)
                 sender.sendMessage(Message.BAN_USAGE)
                 return@t
@@ -65,10 +66,27 @@ class CommandBan: CommandExecutor {
                 }
             }
             val reason = arg.join(" ")
-            if (expiresAt == -1L) {
-                APILocalBan(token!!, reason, uuid, if (sender is Player) sender.uniqueId else server!!.owner.uuid).execute()
-            } else {
-                APITempBan(token!!, reason, uuid, if (sender is Player) sender.uniqueId else server!!.owner.uuid, expiresAt).execute()
+            try {
+                if (expiresAt == -1L) {
+                    APILocalBan(
+                        token!!,
+                        reason,
+                        uuid,
+                        if (sender is Player) sender.uniqueId else server!!.owner.uuid
+                    ).execute()
+                } else {
+                    APITempBan(
+                        token!!,
+                        reason,
+                        uuid,
+                        if (sender is Player) sender.uniqueId else server!!.owner.uuid,
+                        expiresAt
+                    ).execute()
+                }
+            } catch (e: RuntimeException) {
+                if (BanMasterPlugin.debug) e.printStackTrace()
+                sender.sendMessage(String.format(Message.ALREADY_BANNED_PLAYER, player))
+                return@t
             }
             sender.sendMessage(String.format(Message.BANNED_PLAYER, player, reason))
         }.start()

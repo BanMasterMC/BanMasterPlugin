@@ -35,14 +35,23 @@ abstract class Message(language: String) {
         val BAN_USAGE: String
             get() = mapping[language]!!.banUsage
 
+        val GBAN_USAGE: String
+            get() = mapping[language]!!.gbanUsage
+
         val LANGUAGE_CODE: String
             get() = mapping[language]!!.languageCode
 
         val INVALID_TOKEN_READONLY: String
             get() = mapping[language]!!.invalidTokenReadonly
 
+        val ALREADY_BANNED_PLAYER: String
+            get() = mapping[language]!!.alreadyBannedPlayer
+
         val BANNED_PLAYER: String
             get() = mapping[language]!!.bannedPlayer
+
+        val GBANNED_PLAYER: String
+            get() = mapping[language]!!.gbannedPlayer
 
         val NO_ADVANCED_BAN_SUPPORT: String
             get() = mapping[language]!!.noAdvancedBanSupport
@@ -63,8 +72,11 @@ abstract class Message(language: String) {
     abstract val noPlayer: String
     abstract val missingPermission: String
     abstract val banUsage: String
+    abstract val gbanUsage: String
     abstract val invalidTokenReadonly: String
+    abstract val alreadyBannedPlayer: String
     abstract val bannedPlayer: String
+    abstract val gbannedPlayer: String
 
     abstract val noAdvancedBanSupport: String
     abstract val advancedBanImportStart: String

@@ -1,7 +1,11 @@
 package pro.banmaster.common.struct
 
+import org.bukkit.ChatColor
 import pro.banmaster.api.struct.*
-import java.util.UUID
+import pro.banmaster.bukkit.commands.CommandBan
+import util.CollectionList
+import java.util.*
+import kotlin.math.exp
 
 /**
  * Creates Warn object with specified information.
@@ -210,6 +214,28 @@ class BanImpl(
         //fun getById(id: Int): Promise<Ban?> = SqlUtils.getBanById(id)
     }
 
+    override fun getKickMessage(): String {
+        val list = CollectionList<String>()
+        val currentTimestamp = System.currentTimeMillis()
+        if (player.strike_expire_at != null && player.strike_expire_at!! > 0L) {
+            list.add("${ChatColor.RED}現在あなたは処罰が期限切れになっていないため参加できません。")
+            list.add("${ChatColor.GRAY}理由: ${ChatColor.WHITE}${reason}")
+            list.add("")
+            list.add("${ChatColor.GRAY}処罰解除まであと${ChatColor.WHITE}${(player.strike_expire_at!! - currentTimestamp).timestampToDay()}")
+            list.add("")
+            list.add("${ChatColor.GRAY}ユーザーID: ${ChatColor.WHITE}${player.id} ${ChatColor.GRAY}| 処罰ID: ${ChatColor.WHITE}${id}")
+            return list.join("\n")
+        }
+        val perm = expiresAt <= 0
+        list.add("${ChatColor.RED}あなたはサーバーから${if (perm) "永久的に" else "一時的に"}BANされています。")
+        list.add("${ChatColor.GRAY}理由: ${ChatColor.WHITE}${reason}")
+        if (!perm) list.add("")
+        if (!perm) list.add("${ChatColor.GRAY}BAN解除まであと${ChatColor.WHITE}${(expiresAt - currentTimestamp).timestampToDay()}")
+        list.add("")
+        list.add("${ChatColor.GRAY}ユーザーID: ${ChatColor.WHITE}${player.id} ${ChatColor.GRAY}| 処罰ID: ${ChatColor.WHITE}${id}")
+        return list.join("\n")
+    }
+
     //override fun update() = SqlUtils.updateBan(this, false)
 
     //override fun insert() = SqlUtils.updateBan(this, true)
@@ -228,16 +254,16 @@ class BanImpl(
  * @param type whether this mute is local or global (if global, the player will be unable to speak on all servers)
  */
 class MuteImpl(
-        override val id: Int,
-        override val player: User,
-        override val server: Server,
-        override val executer: User,
-        override val reason: String,
-        override val timestamp: Long,
-        override val expiresAt: Long?,
-        override val cancelled: Boolean,
-        override val cancelPlayer: User?,
-        override val type: MuteType
+    override val id: Int,
+    override val player: User,
+    override val server: Server,
+    override val executer: User,
+    override val reason: String,
+    override val timestamp: Long,
+    override val expiresAt: Long?,
+    override val cancelled: Boolean,
+    override val cancelPlayer: User?,
+    override val type: MuteType
 ): Struct, Mute {
     companion object {
         /**
@@ -257,3 +283,10 @@ class BannedAltEntryImpl(
     override val player: User,
     override val ban: Ban,
 ): BannedAltEntry
+
+fun Long.timestampToDay(): String {
+    val d: Long = this / CommandBan.DAY
+    val h: Long = (this - d * CommandBan.DAY) / CommandBan.HOUR
+    val m: Long = (this - (d * CommandBan.DAY + h * CommandBan.HOUR)) / CommandBan.MINUTE
+    return (if (d < 1) "" else d.toString() + "d") + (if (d < 1 && h < 1) "" else h.toString() + "h") + m + "m"
+}

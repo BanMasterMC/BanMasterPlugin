@@ -6,3 +6,5 @@ commands:
     permission: "banmaster.banmaster"
   ban:
     permission: "banmaster.ban"
+  gban:
+    permission: "banmaster.gban"
