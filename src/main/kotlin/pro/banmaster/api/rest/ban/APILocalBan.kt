@@ -11,10 +11,10 @@ class APILocalBan(token: String, reason: String, target: UUID, punisher: UUID): 
     "POST",
     BodyBuilder().setJSON(
         JSONObject()
-            .append("token", token)
-            .append("reason", reason)
-            .append("target", target.noHyphens()) // todo: change to user id?
-            .append("punisher", punisher.noHyphens())
+            .put("token", token)
+            .put("reason", reason)
+            .put("target", target.noHyphens()) // todo: change to user id?
+            .put("punisher", punisher.noHyphens())
     ).build()
 ) {
     override fun execute(): Ban = Ban.parseResponse(executeAPI())

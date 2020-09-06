@@ -8,9 +8,9 @@ import util.promise.Promise
 import java.util.UUID
 
 class APIAdminCheck(token: String, uuid: UUID): APIRequest(
-    "/isAdmin",
+    "/isadmin",
     "POST",
-    BodyBuilder().setJSON(JSONObject().append("token", token).append("uuid", uuid.noHyphens())).build(),
+    BodyBuilder().setJSON(JSONObject().put("token", token).put("uuid", uuid.noHyphens())).build(),
 ) {
     override fun execute(): Promise<BooleanResponse> = Promise.async { BooleanResponse(executeAPI()) }
 }

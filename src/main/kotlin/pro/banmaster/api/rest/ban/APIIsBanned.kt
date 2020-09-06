@@ -8,5 +8,5 @@ import java.util.*
 class APIIsBanned(token: String, uuid: UUID): APIRequest( // todo
     "/isbanned",
     "POST",
-    BodyBuilder().setJSON(JSONObject().append("token", token).append("uuid", uuid.noHyphens())).build()
+    BodyBuilder().setJSON(JSONObject().put("token", token).put("uuid", uuid.noHyphens())).build()
 )

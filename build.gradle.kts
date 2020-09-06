@@ -25,6 +25,7 @@ dependencies {
     shadow(kotlin("stdlib-jdk8"))
     shadow("xyz.acrylicstyle:java-util-all:0.11.25")
     shadow("xyz.acrylicstyle:NMSAPI-shared:0.1.48")
+    shadow("org.apache.httpcomponents:httpclient:4.5.12")
     compileOnly("org.spigotmc:spigot-api:1.8.8-R0.1-SNAPSHOT")
     shadow(fileTree(mapOf("dir" to "libs", "include" to arrayOf("*.jar"))))
 }

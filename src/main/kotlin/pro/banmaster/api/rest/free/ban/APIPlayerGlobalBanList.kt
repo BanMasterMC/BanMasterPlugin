@@ -8,5 +8,5 @@ import java.util.UUID
 class APIPlayerGlobalBanList(uuid: UUID): APIRequest( // todo
     "/free/banlist/player",
     "POST",
-    BodyBuilder().setJSON(JSONObject().append("uuid", uuid.noHyphens())).build(),
+    BodyBuilder().setJSON(JSONObject().put("uuid", uuid.noHyphens())).build(),
 )

@@ -3,9 +3,9 @@ package pro.banmaster.api.rest.response
 import org.json.JSONObject
 import pro.banmaster.api.struct.getBoolean
 import pro.banmaster.api.struct.preprocessResponse
-import util.JSONAPI
+import pro.banmaster.api.rest.JSONAPI2
 
-class BooleanResponse(response: JSONAPI.Response<JSONObject>) {
+class BooleanResponse(response: JSONAPI2.Response<JSONObject>) {
     val data: Boolean
 
     init {

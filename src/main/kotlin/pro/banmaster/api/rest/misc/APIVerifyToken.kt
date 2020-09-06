@@ -4,8 +4,8 @@ import pro.banmaster.api.rest.APIRequest
 import pro.banmaster.api.struct.Server
 
 class APIVerifyToken(token: String): APIRequest(
-    "/verifyToken?token=$token",
-    "POST",
+    "/verifytoken?token=$token",
+    "GET",
 ) {
     override fun execute(): Server = Server.parseResponse(executeAPI())
 }

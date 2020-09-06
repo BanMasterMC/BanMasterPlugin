@@ -7,7 +7,7 @@ import pro.banmaster.api.rest.response.SimpleUUIDList
 class APIMuteList(token: String): APIRequest(
     "mutelist",
     "POST",
-    BodyBuilder().setJSON(JSONObject().append("token", token)).build(),
+    BodyBuilder().setJSON(JSONObject().put("token", token)).build(),
 ) {
     override fun execute(): SimpleUUIDList = SimpleUUIDList.parse(executeAPI())
 }

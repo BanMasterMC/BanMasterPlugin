@@ -2,18 +2,36 @@ package pro.banmaster.api.rest
 
 import org.json.JSONObject
 import pro.banmaster.api.struct.preprocessResponse
-import util.JSONAPI
+import pro.banmaster.bukkit.BanMasterPlugin
 
-abstract class APIRequest: JSONAPI {
-    constructor(path: String, method: String, body: RequestBody) : super(ENDPOINT + path, method, body)
+abstract class APIRequest: JSONAPI2 {
+    private val body: RequestBody?
 
-    constructor(path: String, method: String) : super(path, method)
-
-    companion object {
-        const val ENDPOINT = "https://api.banmaster.pro/v1"
+    constructor(path: String, method: String, body: RequestBody) : super(ENDPOINT + path, method, body) {
+        this.body = body
     }
 
-    protected fun executeAPI(): Response<JSONObject> = call(JSONObject::class.java)
+    constructor(path: String, method: String) : super(ENDPOINT + path, method) {
+        this.body = null
+    }
+
+    companion object {
+        const val ENDPOINT = "https://api.banmaster.dev/v1"
+    }
+
+    protected fun executeAPI(): Response<JSONObject> {
+        if (BanMasterPlugin.debug) {
+            val sugar = if (body == null) "" else ", body: " + body.rawBody
+            BanMasterPlugin.log.info("[debug -> API] Executing $url (method: $method$sugar)")
+        }
+        setPostConnection {
+            it.setHeader("Content-Type", "application/json")
+            it.setHeader("Accept", "application/json")
+        }
+        val res = call(JSONObject::class.java)
+        if (BanMasterPlugin.debug) BanMasterPlugin.log.info("[debug <- API] Response from $url: ${res.rawResponse}")
+        return res
+    }
 
     open fun execute(): Any = preprocessResponse(call(JSONObject::class.java))
 }

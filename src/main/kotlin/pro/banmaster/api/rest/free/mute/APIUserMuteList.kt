@@ -9,7 +9,7 @@ import java.util.UUID
 class APIUserMuteList(uuid: UUID): APIRequest(
     "/free/mutelist/user",
     "POST",
-    BodyBuilder().setJSON(JSONObject().append("uuid", uuid.noHyphens())).build(),
+    BodyBuilder().setJSON(JSONObject().put("uuid", uuid.noHyphens())).build(),
 ) {
     override fun execute(): SimpleList<Int> = SimpleList.parse(executeAPI()) { it as Int }
 }

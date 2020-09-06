@@ -9,7 +9,7 @@ import java.util.UUID
 class APIServerPlayerWarnList(token: String, uuid: UUID): APIRequest(
     "/warnlist/player",
     "POST",
-    BodyBuilder().setJSON(JSONObject().append("token", token).append("uuid", uuid.noHyphens())).build()
+    BodyBuilder().setJSON(JSONObject().put("token", token).put("uuid", uuid.noHyphens())).build()
 ) {
     override fun execute(): SimpleUUIDList = SimpleUUIDList.parse(executeAPI())
 }

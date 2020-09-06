@@ -8,7 +8,7 @@ import java.util.UUID
 
 class APIGetUser(uuid: UUID): APIRequest(
     "/free/user?player=${uuid.noHyphens()}",
-    "POST",
+    "GET",
 ) {
     override fun execute(): Promise<User> = Promise.async { User.parse(executeAPI().response) }
 }

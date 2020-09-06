@@ -2,18 +2,18 @@ package pro.banmaster.api.struct
 
 import org.json.JSONObject
 import pro.banmaster.api.BanMasterAPI
-import util.JSONAPI
+import pro.banmaster.api.rest.JSONAPI2
 import java.util.*
 
-fun preprocessResponse(response: JSONAPI.Response<JSONObject>) {
+fun preprocessResponse(response: JSONAPI2.Response<JSONObject>) {
     if (response.responseCode != 200) throw RuntimeException("Response Code isn't OK: ${response.responseCode} (${response.rawResponse})")
-    if (response.response == null) throw RuntimeException("Could not parse response: ${response.rawResponse} (Response Code: ${response.responseCode})")
+    if (response.response.isEmpty) throw RuntimeException("Could not parse response: ${response.rawResponse} (Response Code: ${response.responseCode})")
 }
 
 private interface StaticStruct {
     fun parse(json: JSONObject): Struct
 
-    fun parseResponse(response: JSONAPI.Response<JSONObject>): Struct
+    fun parseResponse(response: JSONAPI2.Response<JSONObject>): Struct
 }
 
 interface Struct {
@@ -41,7 +41,7 @@ interface Warn: Struct {
             return BanMasterAPI.getInstance().createWarn(id, server, target, punisher, reason, timestamp)
         }
 
-        override fun parseResponse(response: JSONAPI.Response<JSONObject>): Warn {
+        override fun parseResponse(response: JSONAPI2.Response<JSONObject>): Warn {
             preprocessResponse(response)
             return parse(response.response.getJSONObject("DATA"))
         }
@@ -59,7 +59,7 @@ interface AdminEntry: Struct {
             return BanMasterAPI.getInstance().createAdminEntry(server, user)
         }
 
-        override fun parseResponse(response: JSONAPI.Response<JSONObject>): AdminEntry {
+        override fun parseResponse(response: JSONAPI2.Response<JSONObject>): AdminEntry {
             preprocessResponse(response)
             return parse(response.response.getJSONObject("DATA"))
         }
@@ -88,7 +88,7 @@ interface User: Struct {
             return BanMasterAPI.getInstance().createUser(id, uuid, name, null, null, 0L, null, 0L, strikeExpireAt, admin)
         }
 
-        override fun parseResponse(response: JSONAPI.Response<JSONObject>): User {
+        override fun parseResponse(response: JSONAPI2.Response<JSONObject>): User {
             preprocessResponse(response)
             return parse(response.response.getJSONObject("DATA"))
         }
@@ -123,7 +123,7 @@ interface Server: Struct {
             return BanMasterAPI.getInstance().createServer(id, ip, owner, null, null, null, private, admin, premium, verified, banned, disabled)
         }
 
-        override fun parseResponse(response: JSONAPI.Response<JSONObject>): Server {
+        override fun parseResponse(response: JSONAPI2.Response<JSONObject>): Server {
             preprocessResponse(response)
             return parse(response.response.getJSONObject("DATA"))
         }
@@ -159,7 +159,7 @@ interface Ban: Struct {
             return BanMasterAPI.getInstance().createBan(id, target, punisher, server, type, reason, timestamp, expiresAt, unbanner, unbanned, verified)
         }
 
-        override fun parseResponse(response: JSONAPI.Response<JSONObject>): Ban {
+        override fun parseResponse(response: JSONAPI2.Response<JSONObject>): Ban {
             preprocessResponse(response)
             return parse(response.response.getJSONObject("DATA"))
         }
@@ -193,7 +193,7 @@ interface Mute: Struct {
             return BanMasterAPI.getInstance().createMute(id, target, server, punisher, reason, timestamp, expiresAt, cancelled, cancelPlayer, type)
         }
 
-        override fun parseResponse(response: JSONAPI.Response<JSONObject>): Struct {
+        override fun parseResponse(response: JSONAPI2.Response<JSONObject>): Struct {
             preprocessResponse(response)
             return parse(response.response.getJSONObject("DATA"))
         }

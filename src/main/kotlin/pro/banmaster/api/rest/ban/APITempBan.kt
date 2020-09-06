@@ -11,11 +11,11 @@ class APITempBan(token: String, reason: String, target: UUID, punisher: UUID, ex
     "POST",
     BodyBuilder().setJSON(
         JSONObject()
-            .append("token", token)
-            .append("reason", reason)
-            .append("target", target.noHyphens()) // todo: change to user id?
-            .append("punisher", punisher.noHyphens())
-            .append("expires", expires),
+            .put("token", token)
+            .put("reason", reason)
+            .put("target", target.noHyphens()) // todo: change to user id?
+            .put("punisher", punisher.noHyphens())
+            .put("expires", expires),
     ).build()
 ) {
     override fun execute(): Ban = Ban.parseResponse(executeAPI())

@@ -11,10 +11,10 @@ class APIWarn(token: String, reason: String, target: UUID, punisher: UUID): APIR
     "POST",
     BodyBuilder().setJSON(
         JSONObject()
-            .append("token", token)
-            .append("reason", reason)
-            .append("target", target.noHyphens())
-            .append("punisher", punisher.noHyphens())
+            .put("token", token)
+            .put("reason", reason)
+            .put("target", target.noHyphens())
+            .put("punisher", punisher.noHyphens())
     ).build()
 ) {
     override fun execute(): Warn = Warn.parseResponse(super.executeAPI())

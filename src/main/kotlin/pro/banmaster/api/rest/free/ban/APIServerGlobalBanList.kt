@@ -6,5 +6,5 @@ import pro.banmaster.api.rest.APIRequest
 class APIServerGlobalBanList(address: String): APIRequest( // todo
     "/free/banlist/server",
     "POST",
-    BodyBuilder().setJSON(JSONObject().append("address", address)).build(),
+    BodyBuilder().setJSON(JSONObject().put("address", address)).build(),
 )

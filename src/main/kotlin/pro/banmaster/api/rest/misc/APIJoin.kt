@@ -7,10 +7,10 @@ import pro.banmaster.api.struct.noHyphens
 import util.promise.Promise
 import java.util.*
 
-class APIJoin(uuid: UUID, ip: String): APIRequest(
+class APIJoin(token: String, uuid: UUID, ip: String): APIRequest(
     "/join",
     "POST",
-    BodyBuilder().setJSON(JSONObject().append("uuid", uuid.noHyphens()).append("ip", ip)).build()
+    BodyBuilder().setJSON(JSONObject().put("token", token).put("uuid", uuid.noHyphens()).put("ip", ip)).build()
 ) {
     override fun execute(): Promise<APIJoinResponse> = Promise.async { APIJoinResponse(executeAPI()) }
 }
