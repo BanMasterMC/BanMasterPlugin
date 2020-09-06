@@ -1,5 +1,6 @@
 package pro.banmaster.bukkit.commands
 
+import org.bukkit.Bukkit
 import org.bukkit.command.Command
 import org.bukkit.command.CommandExecutor
 import org.bukkit.command.CommandSender
@@ -40,18 +41,20 @@ class CommandGBan: CommandExecutor {
                 return@t
             }
             val reason = arg.join(" ")
+            val kick: String
             try {
-                APIGlobalBan(
+                kick = APIGlobalBan(
                     token!!,
                     reason,
                     uuid,
                     if (sender is Player) sender.uniqueId else server!!.owner.uuid
-                ).execute()
+                ).execute().getKickMessage()
             } catch (e: RuntimeException) {
                 if (BanMasterPlugin.debug) e.printStackTrace()
                 sender.sendMessage(String.format(Message.ALREADY_BANNED_PLAYER, player))
                 return@t
             }
+            Bukkit.getPlayer(uuid)?.kickPlayer(kick)
             sender.sendMessage(String.format(Message.GBANNED_PLAYER, player, reason))
         }.start()
         return true

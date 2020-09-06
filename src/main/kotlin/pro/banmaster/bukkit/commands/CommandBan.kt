@@ -1,5 +1,6 @@
 package pro.banmaster.bukkit.commands
 
+import org.bukkit.Bukkit
 import org.bukkit.command.Command
 import org.bukkit.command.CommandExecutor
 import org.bukkit.command.CommandSender
@@ -66,28 +67,30 @@ class CommandBan: CommandExecutor {
                 }
             }
             val reason = arg.join(" ")
+            val kick: String
             try {
                 if (expiresAt == -1L) {
-                    APILocalBan(
+                    kick = APILocalBan(
                         token!!,
                         reason,
                         uuid,
                         if (sender is Player) sender.uniqueId else server!!.owner.uuid
-                    ).execute()
+                    ).execute().getKickMessage()
                 } else {
-                    APITempBan(
+                    kick = APITempBan(
                         token!!,
                         reason,
                         uuid,
                         if (sender is Player) sender.uniqueId else server!!.owner.uuid,
                         expiresAt
-                    ).execute()
+                    ).execute().getKickMessage()
                 }
             } catch (e: RuntimeException) {
                 if (BanMasterPlugin.debug) e.printStackTrace()
                 sender.sendMessage(String.format(Message.ALREADY_BANNED_PLAYER, player))
                 return@t
             }
+            Bukkit.getPlayer(uuid)?.kickPlayer(kick)
             sender.sendMessage(String.format(Message.BANNED_PLAYER, player, reason))
         }.start()
         return true
