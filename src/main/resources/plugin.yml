@@ -1,0 +1,8 @@
+name: BanMaster
+main: pro.banmaster.bukkit.BanMasterPlugin
+version: "0.0.1"
+commands:
+  banmaster:
+    permission: "banmaster.banmaster"
+  ban:
+    permission: "banmaster.ban"
