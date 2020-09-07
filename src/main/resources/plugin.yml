@@ -8,3 +8,5 @@ commands:
     permission: "banmaster.ban"
   gban:
     permission: "banmaster.gban"
+  unban:
+    permission: "banmaster.unban"

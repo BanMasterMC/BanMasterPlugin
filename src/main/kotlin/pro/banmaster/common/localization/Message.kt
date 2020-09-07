@@ -38,8 +38,11 @@ abstract class Message(language: String) {
         val GBAN_USAGE: String
             get() = mapping[language]!!.gbanUsage
 
-        val LANGUAGE_CODE: String
-            get() = mapping[language]!!.languageCode
+        val UNBAN_USAGE: String
+            get() = mapping[language]!!.unbanUsage
+
+        val LOCALE: String
+            get() = mapping[language]!!.locale
 
         val INVALID_TOKEN_READONLY: String
             get() = mapping[language]!!.invalidTokenReadonly
@@ -52,6 +55,9 @@ abstract class Message(language: String) {
 
         val GBANNED_PLAYER: String
             get() = mapping[language]!!.gbannedPlayer
+
+        val UNBANNED_PLAYER: String
+            get() = mapping[language]!!.unbannedPlayer
 
         val NO_ADVANCED_BAN_SUPPORT: String
             get() = mapping[language]!!.noAdvancedBanSupport
@@ -66,17 +72,19 @@ abstract class Message(language: String) {
             get() = mapping[language]!!.advancedBanImportError
     }
 
-    abstract val languageCode: String
+    abstract val locale: String
     abstract val invalidToken: String
     abstract val noArgument: String
     abstract val noPlayer: String
     abstract val missingPermission: String
     abstract val banUsage: String
     abstract val gbanUsage: String
+    abstract val unbanUsage: String
     abstract val invalidTokenReadonly: String
     abstract val alreadyBannedPlayer: String
     abstract val bannedPlayer: String
     abstract val gbannedPlayer: String
+    abstract val unbannedPlayer: String
 
     abstract val noAdvancedBanSupport: String
     abstract val advancedBanImportStart: String

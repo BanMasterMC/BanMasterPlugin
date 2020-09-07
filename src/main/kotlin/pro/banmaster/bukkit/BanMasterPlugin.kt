@@ -7,6 +7,7 @@ import pro.banmaster.api.rest.misc.APIVerifyToken
 import pro.banmaster.api.struct.Server
 import pro.banmaster.bukkit.commands.CommandBan
 import pro.banmaster.bukkit.commands.CommandGBan
+import pro.banmaster.bukkit.commands.CommandUnban
 import pro.banmaster.bukkit.config.ConfigProvider
 import pro.banmaster.bukkit.listeners.PlayerListener
 import pro.banmaster.common.localization.Message
@@ -30,6 +31,7 @@ class BanMasterPlugin: BanMasterAPIImpl() {
         Bukkit.getPluginManager().registerEvents(PlayerListener(), this)
         Bukkit.getPluginCommand("ban").executor = CommandBan()
         Bukkit.getPluginCommand("gban").executor = CommandGBan()
+        Bukkit.getPluginCommand("unban").executor = CommandUnban()
         reload()
     }
 
@@ -37,6 +39,7 @@ class BanMasterPlugin: BanMasterAPIImpl() {
         conf = ConfigProvider.getConfig("./plugins/BanMaster/config.yml")
         Message.register()
         Message.language = conf.getString("language", "ja_JP")
+        log.info("Setting language: ${Message.LOCALE}")
         if (conf.getBoolean("enforceAdminList")) enforceAdminList = true
         token = conf.getString("token")
         if (token == null) {
