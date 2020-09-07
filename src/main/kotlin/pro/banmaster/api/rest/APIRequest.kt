@@ -37,9 +37,9 @@ abstract class APIRequest: JSONAPI {
             it.setRequestProperty("Accept", "application/json")
         }
         val res = call(JSONObject::class.java)
-        if (BanMasterPlugin.debug) BanMasterPlugin.log.info("[debug <- API] Response from $url: ${res.response}")
+        if (BanMasterPlugin.debug) BanMasterPlugin.log.info("[debug <- API] Response from $url: ${if (res.response == null) "Raw: ${res.rawResponse}" else res.response.toString()}")
         return res
     }
 
-    open fun execute(): Any = preprocessResponse(call(JSONObject::class.java))
+    open fun execute(): Any = preprocessResponse(executeAPI())
 }

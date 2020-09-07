@@ -59,8 +59,9 @@ abstract class BanMasterAPIImpl: JavaPlugin(), BanMasterAPI {
         expiresAt: Long,
         unbanner: User?,
         unbanned: Boolean,
-        verified: Boolean
-    ): Ban = BanImpl(id, player, punisher, server, type, reason, timestamp, expiresAt, unbanner, unbanned, verified)
+        verified: Boolean,
+        category: Int,
+    ): Ban = BanImpl(id, player, punisher, server, type, reason, timestamp, expiresAt, unbanner, unbanned, verified, category)
 
     override fun createMute(
             id: Int,

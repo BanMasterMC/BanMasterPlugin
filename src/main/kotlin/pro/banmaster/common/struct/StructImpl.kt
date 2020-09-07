@@ -204,6 +204,7 @@ class BanImpl(
     override val unbanner: User?,
     override val unbanned: Boolean,
     override val verified: Boolean,
+    override val category: Int,
 ): Struct, Ban {
     companion object {
         /**

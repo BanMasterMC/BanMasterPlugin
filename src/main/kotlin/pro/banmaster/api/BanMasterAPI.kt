@@ -51,7 +51,8 @@ interface BanMasterAPI {
                   expiresAt: Long,
                   unbanner: User?,
                   unbanned: Boolean,
-                  verified: Boolean): Ban
+                  verified: Boolean,
+                  category: Int): Ban
 
     fun createMute(id: Int,
                    player: User,

@@ -5,7 +5,7 @@ import pro.banmaster.api.rest.APIRequest
 import pro.banmaster.api.rest.response.SimpleUUIDList
 
 class APIMuteList(token: String): APIRequest(
-    "mutelist",
+    "/mutelist",
     "POST",
     BodyBuilder().setJSON(JSONObject().put("token", token)).build(),
 ) {

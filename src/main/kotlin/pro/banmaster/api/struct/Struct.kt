@@ -142,6 +142,7 @@ interface Ban: Struct {
     val unbanner: User?
     val unbanned: Boolean
     val verified: Boolean
+    val category: Int
 
     companion object: StaticStruct {
         override fun parse(json: JSONObject): Ban {
@@ -156,7 +157,8 @@ interface Ban: Struct {
             val unbanner = if (unbanned) User.parse(json.getJSONObject("UNBANNER")) else null
             val type = if (json.getBoolean("GLOBAL", false)) BanType.GLOBAL else BanType.LOCAL
             val verified = json.getBoolean("VERIFIED", false)
-            return BanMasterAPI.getInstance().createBan(id, target, punisher, server, type, reason, timestamp, expiresAt, unbanner, unbanned, verified)
+            val category = BanCategory.read(json.getJSONObject("CATEGORY"))
+            return BanMasterAPI.getInstance().createBan(id, target, punisher, server, type, reason, timestamp, expiresAt, unbanner, unbanned, verified, category)
         }
 
         override fun parseResponse(response: JSONAPI.Response<JSONObject>): Ban {
@@ -225,7 +227,7 @@ enum class BanType {
     LOCAL, GLOBAL
 }
 
-object BanCategory { // todo: support BanCategory
+object BanCategory {
     const val GRIEFING = 1 shl 0
     const val X_RAY = 1 shl 1
     const val HACK_COMBAT = 1 shl 2
@@ -233,6 +235,18 @@ object BanCategory { // todo: support BanCategory
     const val HACK_OTHER = 1 shl 4
     const val SPAM_BOT = 1 shl 5
     const val OTHER = 1 shl 6
+
+    fun read(json: JSONObject): Int {
+        var category = 0
+        if (json.getBoolean("GRIEFING", false)) category += GRIEFING
+        if (json.getBoolean("XRAY", false)) category += X_RAY
+        if (json.getBoolean("COMBATHACK", false)) category += HACK_COMBAT
+        if (json.getBoolean("MOVEMENTHACK", false)) category += HACK_MOVEMENT
+        if (json.getBoolean("OTHERHACK", false)) category += HACK_OTHER
+        if (json.getBoolean("SPAMBOT", false)) category += SPAM_BOT
+        if (json.getBoolean("OTHER", false)) category += OTHER
+        return category
+    }
 }
 
 object DataParser {
@@ -242,4 +256,5 @@ object DataParser {
     val USER = User.Companion::parse
     val SERVER = Server.Companion::parse
     val ADMIN_ENTRY = AdminEntry.Companion::parse
+    val BAN_CATEGORY = BanCategory::read
 }
