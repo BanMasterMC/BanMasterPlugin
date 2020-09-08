@@ -10,3 +10,9 @@ commands:
     permission: "banmaster.gban"
   unban:
     permission: "banmaster.unban"
+  whois:
+    permission: "banmaster.whois"
+    aliases: "lookup"
+  warn:
+    permission: "banmaster.warn"
+    aliases: "warning"

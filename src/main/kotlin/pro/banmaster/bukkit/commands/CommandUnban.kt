@@ -27,7 +27,7 @@ class CommandUnban: CommandExecutor {
                 }
             }
             if (args.isEmpty()) {
-                sender.sendMessage(Message.NO_ARGUMENT)
+                sender.sendMessage(Message.INVALID_ARGUMENT)
                 sender.sendMessage(Message.UNBAN_USAGE)
                 return@t
             }
@@ -37,7 +37,7 @@ class CommandUnban: CommandExecutor {
                 return@t
             }
             val player = if (sender is Player) sender.uniqueId else server!!.owner.uuid
-            APIUnban(token!!, uuid, player).execute()
+            APIUnban(uuid, player).execute()
             sender.sendMessage(String.format(Message.UNBANNED_PLAYER, args[0]))
         }.start()
         return true

@@ -218,18 +218,29 @@ class BanImpl(
     override fun getKickMessage(): String {
         val list = CollectionList<String>()
         val currentTimestamp = System.currentTimeMillis()
-        if (player.strike_expire_at != null && player.strike_expire_at!! > 0L) {
-            list.add("${ChatColor.RED}現在あなたは処罰が期限切れになっていないため参加できません。")
+        if (player.strike_expire_at != null) {
+            val perm: Boolean
+            if (player.strike_expire_at!! == 0L) {
+                list.add("${ChatColor.RED}現在あなたはGlobal BANを2回されているため永久的にBANされています。")
+                perm = true
+            } else {
+                list.add("${ChatColor.RED}現在あなたは処罰が期限切れになっていないため参加できません。")
+                perm = false
+            }
             list.add("${ChatColor.GRAY}理由: ${ChatColor.WHITE}${reason}")
             list.add("")
-            list.add("${ChatColor.GRAY}処罰解除まであと${ChatColor.WHITE}${(player.strike_expire_at!! - currentTimestamp).timestampToDay()}")
+            list.add("${ChatColor.GRAY}種類: ${ChatColor.WHITE}${if (type == BanType.GLOBAL) "${ChatColor.RED}Global" else "${ChatColor.YELLOW}Local"}")
             list.add("")
+            if (!perm) list.add("${ChatColor.GRAY}処罰解除まであと${ChatColor.WHITE}${(player.strike_expire_at!! - currentTimestamp).timestampToDay()}")
+            if (!perm) list.add("")
             list.add("${ChatColor.GRAY}ユーザーID: ${ChatColor.WHITE}${player.id} ${ChatColor.GRAY}| 処罰ID: ${ChatColor.WHITE}${id}")
             return list.join("\n")
         }
         val perm = expiresAt <= 0
         list.add("${ChatColor.RED}あなたはサーバーから${if (perm) "永久的に" else "一時的に"}BANされています。")
         list.add("${ChatColor.GRAY}理由: ${ChatColor.WHITE}${reason}")
+        list.add("")
+        list.add("${ChatColor.GRAY}種類: ${ChatColor.WHITE}${if (type == BanType.GLOBAL) "${ChatColor.RED}Global" else "${ChatColor.YELLOW}Local"}")
         if (!perm) list.add("")
         if (!perm) list.add("${ChatColor.GRAY}BAN解除まであと${ChatColor.WHITE}${(expiresAt - currentTimestamp).timestampToDay()}")
         list.add("")

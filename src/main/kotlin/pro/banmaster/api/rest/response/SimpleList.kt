@@ -2,6 +2,7 @@ package pro.banmaster.api.rest.response
 
 import org.json.JSONObject
 import pro.banmaster.api.struct.preprocessResponse
+import util.CollectionList
 import util.JSONAPI
 
 class SimpleList<E>: ArrayList<E>() {
@@ -13,4 +14,6 @@ class SimpleList<E>: ArrayList<E>() {
             return list
         }
     }
+
+    fun toCollectionList(): CollectionList<E> = CollectionList(this)
 }

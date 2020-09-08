@@ -5,9 +5,7 @@ import org.bukkit.plugin.ServicePriority
 import pro.banmaster.api.BanMasterAPI
 import pro.banmaster.api.rest.misc.APIVerifyToken
 import pro.banmaster.api.struct.Server
-import pro.banmaster.bukkit.commands.CommandBan
-import pro.banmaster.bukkit.commands.CommandGBan
-import pro.banmaster.bukkit.commands.CommandUnban
+import pro.banmaster.bukkit.commands.*
 import pro.banmaster.bukkit.config.ConfigProvider
 import pro.banmaster.bukkit.listeners.PlayerListener
 import pro.banmaster.common.localization.Message
@@ -17,6 +15,8 @@ class BanMasterPlugin: BanMasterAPIImpl() {
     companion object {
         lateinit var conf: ConfigProvider
         var token: String? = ""
+        var saveIp = false
+        var showLocalBans = false
         lateinit var log: Logger
         var invalidToken = false
         var server: Server? = null
@@ -25,6 +25,7 @@ class BanMasterPlugin: BanMasterAPIImpl() {
     }
 
     override fun onEnable() {
+        config.options().copyDefaults(true)
         log = logger
         conflicts("MCBans", "コマンドの競合")
         Bukkit.getServicesManager().register(BanMasterAPI::class.java, this, this, ServicePriority.Normal)
@@ -32,6 +33,8 @@ class BanMasterPlugin: BanMasterAPIImpl() {
         Bukkit.getPluginCommand("ban").executor = CommandBan()
         Bukkit.getPluginCommand("gban").executor = CommandGBan()
         Bukkit.getPluginCommand("unban").executor = CommandUnban()
+        Bukkit.getPluginCommand("whois").executor = CommandWhois()
+        Bukkit.getPluginCommand("warn").executor = CommandWarn()
         reload()
     }
 
@@ -40,7 +43,9 @@ class BanMasterPlugin: BanMasterAPIImpl() {
         Message.register()
         Message.language = conf.getString("language", "ja_JP")
         log.info("Setting language: ${Message.LOCALE}")
-        if (conf.getBoolean("enforceAdminList")) enforceAdminList = true
+        saveIp = conf.getBoolean("save-ip", false)
+        showLocalBans = conf.getBoolean("showLocalBans", false)
+        enforceAdminList = conf.getBoolean("enforceAdminList", false)
         token = conf.getString("token")
         if (token == null) {
             invalidToken = true

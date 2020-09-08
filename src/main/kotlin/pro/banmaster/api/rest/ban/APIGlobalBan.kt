@@ -4,9 +4,10 @@ import org.json.JSONObject
 import pro.banmaster.api.rest.APIRequest
 import pro.banmaster.api.struct.Ban
 import pro.banmaster.api.struct.noHyphens
+import pro.banmaster.bukkit.BanMasterPlugin.Companion.token
 import java.util.UUID
 
-class APIGlobalBan(token: String, reason: String, target: UUID, punisher: UUID): APIRequest(
+class APIGlobalBan(reason: String, target: UUID, punisher: UUID): APIRequest(
     "/gban",
     "POST",
     BodyBuilder().setJSON(

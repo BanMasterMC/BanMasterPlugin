@@ -10,6 +10,7 @@ import pro.banmaster.api.rest.ban.APITempBan
 import pro.banmaster.api.rest.misc.APIAdminCheck
 import pro.banmaster.bukkit.BanMasterPlugin
 import pro.banmaster.bukkit.BanMasterPlugin.Companion.enforceAdminList
+import pro.banmaster.bukkit.BanMasterPlugin.Companion.invalidToken
 import pro.banmaster.bukkit.BanMasterPlugin.Companion.server
 import pro.banmaster.bukkit.BanMasterPlugin.Companion.token
 import pro.banmaster.common.localization.Message
@@ -20,7 +21,7 @@ import xyz.acrylicstyle.shared.BaseMojangAPI
 
 class CommandBan: CommandExecutor {
     override fun onCommand(sender: CommandSender, command: Command, label: String, args: Array<out String>): Boolean {
-        if (server == null) {
+        if (invalidToken) {
             sender.sendMessage(Message.INVALID_TOKEN)
             return true
         }
@@ -32,7 +33,7 @@ class CommandBan: CommandExecutor {
                 }
             }
             if (args.size < 2) {
-                sender.sendMessage(Message.NO_ARGUMENT)
+                sender.sendMessage(Message.INVALID_ARGUMENT)
                 sender.sendMessage(Message.BAN_USAGE)
                 return@t
             }
@@ -69,16 +70,14 @@ class CommandBan: CommandExecutor {
             val reason = arg.join(" ")
             val kick: String
             try {
-                if (expiresAt == -1L) {
-                    kick = APILocalBan(
-                        token!!,
+                kick = if (expiresAt == -1L) {
+                    APILocalBan(
                         reason,
                         uuid,
                         if (sender is Player) sender.uniqueId else server!!.owner.uuid
                     ).execute().getKickMessage()
                 } else {
-                    kick = APITempBan(
-                        token!!,
+                    APITempBan(
                         reason,
                         uuid,
                         if (sender is Player) sender.uniqueId else server!!.owner.uuid,

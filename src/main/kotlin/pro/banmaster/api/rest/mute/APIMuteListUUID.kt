@@ -1,12 +1,12 @@
-package pro.banmaster.api.rest.ban
+package pro.banmaster.api.rest.mute
 
 import org.json.JSONObject
 import pro.banmaster.api.rest.APIRequest
 import pro.banmaster.api.rest.response.SimpleUUIDList
 import pro.banmaster.bukkit.BanMasterPlugin.Companion.token
 
-class APIBannedPlayerList(): APIRequest(
-    "/getbanplayers",
+class APIMuteListUUID: APIRequest(
+    "/getmuteplayers",
     "POST",
     BodyBuilder().setJSON(JSONObject().put("token", token)).build(),
 ) {

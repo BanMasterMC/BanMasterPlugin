@@ -23,8 +23,8 @@ abstract class Message(language: String) {
         val INVALID_TOKEN: String
             get() = mapping[language]!!.invalidToken
 
-        val NO_ARGUMENT: String
-            get() = mapping[language]!!.noArgument
+        val INVALID_ARGUMENT: String
+            get() = mapping[language]!!.invalidArgument
 
         val NO_PLAYER: String
             get() = mapping[language]!!.noPlayer
@@ -41,8 +41,29 @@ abstract class Message(language: String) {
         val UNBAN_USAGE: String
             get() = mapping[language]!!.unbanUsage
 
+        val WHOIS_USAGE: String
+            get() = mapping[language]!!.whoisUsage
+
+        val WHOIS_RESULT: String
+            get() = mapping[language]!!.whoisResult
+
         val LOCALE: String
             get() = mapping[language]!!.locale
+
+        val COUNTRY: String
+            get() = mapping[language]!!.country
+
+        val PLAYER_NAME: String
+            get() = mapping[language]!!.playerName
+
+        val LOCAL_BAN: String
+            get() = mapping[language]!!.localBan
+
+        val GLOBAL_BAN: String
+            get() = mapping[language]!!.globalBan
+
+        val MUTE_COUNT: String
+            get() = mapping[language]!!.muteCount
 
         val INVALID_TOKEN_READONLY: String
             get() = mapping[language]!!.invalidTokenReadonly
@@ -59,6 +80,12 @@ abstract class Message(language: String) {
         val UNBANNED_PLAYER: String
             get() = mapping[language]!!.unbannedPlayer
 
+        val WARNED_PLAYER: String
+            get() = mapping[language]!!.warnedPlayer
+
+        val ERROR: String
+            get() = mapping[language]!!.error
+
         val NO_ADVANCED_BAN_SUPPORT: String
             get() = mapping[language]!!.noAdvancedBanSupport
 
@@ -74,17 +101,27 @@ abstract class Message(language: String) {
 
     abstract val locale: String
     abstract val invalidToken: String
-    abstract val noArgument: String
+    abstract val invalidArgument: String
     abstract val noPlayer: String
     abstract val missingPermission: String
     abstract val banUsage: String
     abstract val gbanUsage: String
     abstract val unbanUsage: String
+    abstract val whoisUsage: String
+    abstract val whoisResult: String
     abstract val invalidTokenReadonly: String
     abstract val alreadyBannedPlayer: String
     abstract val bannedPlayer: String
     abstract val gbannedPlayer: String
     abstract val unbannedPlayer: String
+    abstract val warnedPlayer: String
+    abstract val error: String
+
+    abstract val country: String
+    abstract val playerName: String
+    abstract val localBan: String
+    abstract val globalBan: String
+    abstract val muteCount: String
 
     abstract val noAdvancedBanSupport: String
     abstract val advancedBanImportStart: String

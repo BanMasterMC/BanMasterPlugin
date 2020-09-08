@@ -1,0 +1,20 @@
+database: # MySQL only
+  host: # データベースのIP(ホスト)
+  name: # データベース名
+  user: # MySQLユーザー名
+  password: # MySQLパスワード
+
+# APIトークン(BANなどの操作をするのに必要です)
+token: null
+
+# 常にAdminリストを使用するかどうかを設定します。
+# Adminリストを使用すると、BANのようなコマンドはAdminリストにプレイヤーが存在しないと実行できないようになります。
+# falseに設定するとこの機能を無効化し、パーミッションノードを持っているプレイヤーが実行できるようになります。
+enforceAdminList: false
+
+# プレイヤーのIPアドレスを保存するかどうかを指定します。
+# サーバーにいるプレイヤーの80%以上が同じIPを使用していた場合は、この設定は無視されfalseに設定されているかのような挙動になります。
+save-ip: false
+
+# WhoisコマンドなどでLocal BANを表示するかどうかを設定します。
+show-local-bans: true

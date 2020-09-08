@@ -1,0 +1,15 @@
+# the API key that will be required to use plugin and works correctly.
+token: null
+
+# Whether the plugin will enforce the admin list
+# Enforcing admin list will: Actions like ban will requires player to be listed in the admin list,
+# so the player will be unable to run some commands even if they have the permission node granted by like LuckPerms.
+# Setting this to false will disable this option and will be available for all players who has permission node.
+enforceAdminList: false
+
+# Whether the plugin will try to save players' IP address.
+# This setting will be ignored and set to false if the 80%+ players in the server is using the same IP.
+# If you're using traditional Reverse proxy, consider using HAProxy.
+save-ip: false
+
+show-local-bans: false
