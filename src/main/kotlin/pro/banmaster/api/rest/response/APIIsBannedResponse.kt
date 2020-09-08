@@ -6,7 +6,7 @@ import pro.banmaster.api.struct.getBoolean
 import pro.banmaster.api.struct.preprocessResponse
 import util.JSONAPI
 
-class APIJoinResponse(response: JSONAPI.Response<JSONObject>) {
+class APIIsBannedResponse(response: JSONAPI.Response<JSONObject>) {
     val isBanned: Boolean
     val banData: Ban?
 
