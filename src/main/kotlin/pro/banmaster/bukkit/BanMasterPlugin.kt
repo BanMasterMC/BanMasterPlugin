@@ -1,6 +1,7 @@
 package pro.banmaster.bukkit
 
 import org.bukkit.Bukkit
+import org.bukkit.ChatColor
 import org.bukkit.plugin.ServicePriority
 import pro.banmaster.api.BanMasterAPI
 import pro.banmaster.api.rest.misc.APIVerifyToken
@@ -9,6 +10,8 @@ import pro.banmaster.bukkit.commands.*
 import pro.banmaster.bukkit.config.ConfigProvider
 import pro.banmaster.bukkit.listeners.PlayerListener
 import pro.banmaster.common.localization.Message
+import pro.banmaster.spigot.PaperConfig
+import pro.banmaster.spigot.SpigotConfig
 import java.util.logging.Logger
 
 class BanMasterPlugin: BanMasterAPIImpl() {
@@ -22,11 +25,28 @@ class BanMasterPlugin: BanMasterAPIImpl() {
         var server: Server? = null
         var enforceAdminList = false
         var debug = java.lang.Boolean.getBoolean("pro.banmaster.debug")
+        var color = ChatColor.WHITE
+    }
+
+    override fun onLoad() {
+        log = logger
     }
 
     override fun onEnable() {
+        reload()
+        val onlineMode = if (PaperConfig.isPresent()) PaperConfig.isProxyOnlineMode() else {
+            if (Bukkit.getOnlineMode()) {
+                true
+            } else {
+                if (SpigotConfig.isPresent()) SpigotConfig.bungee else false
+            }
+        }
+        if (!onlineMode) {
+            log.severe(Message.OFFLINE_MODE)
+            Bukkit.getPluginManager().disablePlugin(this)
+            throw RuntimeException()
+        }
         config.options().copyDefaults(true)
-        log = logger
         conflicts("MCBans", "コマンドの競合")
         Bukkit.getServicesManager().register(BanMasterAPI::class.java, this, this, ServicePriority.Normal)
         Bukkit.getPluginManager().registerEvents(PlayerListener(), this)
@@ -35,7 +55,6 @@ class BanMasterPlugin: BanMasterAPIImpl() {
         Bukkit.getPluginCommand("unban").executor = CommandUnban()
         Bukkit.getPluginCommand("whois").executor = CommandWhois()
         Bukkit.getPluginCommand("warn").executor = CommandWarn()
-        reload()
     }
 
     private fun reload() {
@@ -46,6 +65,7 @@ class BanMasterPlugin: BanMasterAPIImpl() {
         saveIp = conf.getBoolean("save-ip", false)
         showLocalBans = conf.getBoolean("showLocalBans", false)
         enforceAdminList = conf.getBoolean("enforceAdminList", false)
+        color = ChatColor.valueOf(config.getString("white-to", "WHITE"))
         token = conf.getString("token")
         if (token == null) {
             invalidToken = true

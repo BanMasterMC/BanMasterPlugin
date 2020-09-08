@@ -41,5 +41,5 @@ abstract class APIRequest: JSONAPI {
         return res
     }
 
-    open fun execute(): Any = preprocessResponse(executeAPI())
+    open fun execute(): Any? = preprocessResponse(executeAPI())
 }

@@ -18,3 +18,5 @@ save-ip: false
 
 # WhoisコマンドなどでLocal BANを表示するかどうかを設定します。
 show-local-bans: true
+
+white-to: WHITE

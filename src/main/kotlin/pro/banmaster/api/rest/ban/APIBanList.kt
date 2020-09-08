@@ -13,5 +13,7 @@ class APIBanList(uuid: UUID, limit: Int, offset: Int): APIRequest(
     "POST",
     BodyBuilder().setJSON(JSONObject().put("token", token).put("uuid", uuid.noHyphens()).put("limit", limit).put("offset", offset)).build(),
 ) {
-    override fun execute(): SimpleList<Ban> = SimpleList.parse(executeAPI()) { Ban.parse(it as JSONObject) }
+    override fun execute(): SimpleList<Ban>? = try {
+        SimpleList.parse(executeAPI()) { Ban.parse(it as JSONObject) }
+    } catch (e: RuntimeException) { null }
 }

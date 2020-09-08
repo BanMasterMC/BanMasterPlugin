@@ -9,6 +9,7 @@ import pro.banmaster.api.rest.free.player.APIGetUser
 import pro.banmaster.api.rest.mute.APIMuteList
 import pro.banmaster.api.struct.BanType
 import pro.banmaster.bukkit.BanMasterPlugin
+import pro.banmaster.bukkit.BanMasterPlugin.Companion.color
 import pro.banmaster.common.localization.Message
 import xyz.acrylicstyle.shared.BaseMojangAPI
 
@@ -23,29 +24,40 @@ class CommandWhois: CommandExecutor {
             sender.sendMessage(Message.WHOIS_USAGE)
             return true
         }
-        val uuid = BaseMojangAPI.getUniqueId(args[0])
+        val uuid = try {
+            BaseMojangAPI.getUniqueId(args[0])
+        } catch (_: RuntimeException) {
+            sender.sendMessage(Message.NO_PLAYER)
+            return true
+        }
         if (uuid == null) {
             sender.sendMessage(Message.NO_PLAYER)
             return true
         }
         APIGetUser(uuid).execute().then { user ->
-            val bans = APIBanList(uuid, 1000, 0).execute().toCollectionList()
-            val globalBans = bans.filter { ban -> ban.type == BanType.GLOBAL }
-            val localBans = bans.filter { ban -> ban.type == BanType.LOCAL }
-            val mutes = APIMuteList(uuid, 1000, 0).execute()
-            sender.sendMessage(String.format(Message.WHOIS_RESULT, user.name ?: args[0], globalBans.size, localBans.size, mutes.size))
-            sender.sendMessage("${ChatColor.YELLOW}ID: ${user.id}")
-            sender.sendMessage("${ChatColor.YELLOW}${Message.PLAYER_NAME}: ${user.name ?: args[0]}")
-            sender.sendMessage("${ChatColor.YELLOW}UUID: ${user.uuid}")
-            sender.sendMessage("${ChatColor.YELLOW}${Message.COUNTRY}: ${user.country ?: "?"}")
-            sender.sendMessage("${ChatColor.RED} = ${Message.GLOBAL_BAN} =")
-            globalBans.forEach {
-                sender.sendMessage("${ChatColor.AQUA}#${it.id}: ${ChatColor.WHITE}${it.reason} ${ChatColor.GRAY}(@${it.server.name})")
+            val bans = APIBanList(uuid, 1000, 0).execute()?.toCollectionList()
+            val globalBans = bans?.filter { ban -> ban.type == BanType.GLOBAL }
+            val localBans = bans?.filter { ban -> ban.type == BanType.LOCAL }
+            val mutes = APIMuteList(uuid, 1000, 0).execute()?.size ?: 0
+            sender.sendMessage("${ChatColor.YELLOW}${ChatColor.BOLD}${ChatColor.STRIKETHROUGH}------------------------------")
+            //if (BanMasterPlugin.debug) sender.sendMessage("${ChatColor.GRAY}[debug] ${ChatColor.AQUA}User ID: ${ChatColor.RED}${user.id}")
+            sender.sendMessage("${color}ID: ${ChatColor.GRAY}${user.name ?: args[0]}")
+            sender.sendMessage("${color}UUID: ${ChatColor.GRAY}${user.uuid}")
+            sender.sendMessage("${color}${Message.GLOBAL_BAN}: ${ChatColor.RED}${globalBans?.size ?: 0}")
+            if (globalBans != null && globalBans.isNotEmpty()) {
+                globalBans.forEach {
+                    sender.sendMessage("${ChatColor.LIGHT_PURPLE} - ${ChatColor.GREEN}#${it.id}: ${ChatColor.WHITE}${it.reason} ${ChatColor.GRAY}(@${it.server.name})")
+                }
             }
-            sender.sendMessage("${ChatColor.RED} = ${Message.LOCAL_BAN} =")
-            localBans.forEach {
-                sender.sendMessage("${ChatColor.AQUA}#${it.id}: ${ChatColor.WHITE}${it.reason} ${ChatColor.GRAY}(@${it.server.name})")
+            sender.sendMessage("${color}${Message.LOCAL_BAN}: ${ChatColor.RED}${localBans?.size ?: 0}")
+            if (localBans != null && localBans.isNotEmpty()) {
+                localBans.forEach {
+                    sender.sendMessage("${ChatColor.LIGHT_PURPLE} - ${ChatColor.GREEN}#${it.id}: ${ChatColor.WHITE}${it.reason} ${ChatColor.GRAY}(@${it.server.name})")
+                }
             }
+            sender.sendMessage("${color}${Message.MUTE_COUNT}: ${ChatColor.RED}${mutes}")
+            sender.sendMessage("${color}${Message.COUNTRY}: ${ChatColor.LIGHT_PURPLE}${user.country ?: "Japan"}")
+            sender.sendMessage("${ChatColor.YELLOW}${ChatColor.BOLD}${ChatColor.STRIKETHROUGH}------------------------------")
         }.queue()
         return true
     }

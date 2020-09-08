@@ -44,26 +44,8 @@ abstract class Message(language: String) {
         val WHOIS_USAGE: String
             get() = mapping[language]!!.whoisUsage
 
-        val WHOIS_RESULT: String
-            get() = mapping[language]!!.whoisResult
-
         val LOCALE: String
             get() = mapping[language]!!.locale
-
-        val COUNTRY: String
-            get() = mapping[language]!!.country
-
-        val PLAYER_NAME: String
-            get() = mapping[language]!!.playerName
-
-        val LOCAL_BAN: String
-            get() = mapping[language]!!.localBan
-
-        val GLOBAL_BAN: String
-            get() = mapping[language]!!.globalBan
-
-        val MUTE_COUNT: String
-            get() = mapping[language]!!.muteCount
 
         val INVALID_TOKEN_READONLY: String
             get() = mapping[language]!!.invalidTokenReadonly
@@ -85,6 +67,26 @@ abstract class Message(language: String) {
 
         val ERROR: String
             get() = mapping[language]!!.error
+
+        val OFFLINE_MODE: String
+            get() = mapping[language]!!.offlineMode
+
+
+        val COUNTRY: String
+            get() = mapping[language]!!.country
+
+        val PLAYER_NAME: String
+            get() = mapping[language]!!.playerName
+
+        val LOCAL_BAN: String
+            get() = mapping[language]!!.localBan
+
+        val GLOBAL_BAN: String
+            get() = mapping[language]!!.globalBan
+
+        val MUTE_COUNT: String
+            get() = mapping[language]!!.muteCount
+
 
         val NO_ADVANCED_BAN_SUPPORT: String
             get() = mapping[language]!!.noAdvancedBanSupport
@@ -108,7 +110,6 @@ abstract class Message(language: String) {
     abstract val gbanUsage: String
     abstract val unbanUsage: String
     abstract val whoisUsage: String
-    abstract val whoisResult: String
     abstract val invalidTokenReadonly: String
     abstract val alreadyBannedPlayer: String
     abstract val bannedPlayer: String
@@ -116,6 +117,7 @@ abstract class Message(language: String) {
     abstract val unbannedPlayer: String
     abstract val warnedPlayer: String
     abstract val error: String
+    abstract val offlineMode: String
 
     abstract val country: String
     abstract val playerName: String

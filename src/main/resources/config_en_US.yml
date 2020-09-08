@@ -13,3 +13,5 @@ enforceAdminList: false
 save-ip: false
 
 show-local-bans: false
+
+white-to: WHITE

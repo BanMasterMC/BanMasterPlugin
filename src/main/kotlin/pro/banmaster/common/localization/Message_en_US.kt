@@ -12,7 +12,6 @@ class Message_en_US: Message("en_US") {
     override val gbanUsage = "${YELLOW}/gban <Player> <Reason>"
     override val unbanUsage = "${YELLOW}/unban <Player>"
     override val whoisUsage = "${YELLOW}/whois <Player>"
-    override val whoisResult = "${BLUE}%s ${YELLOW}has ${RED}%d ${YELLOW}Global Ban(s), ${RED}%d ${YELLOW}Local Ban(s), and ${RED}%d ${YELLOW}Active mutes."
     override val invalidTokenReadonly = "BanMaster will be read-only access."
     override val alreadyBannedPlayer = "${RED}Player %s is already banned, or this ban doesn't meet requirements."
     override val bannedPlayer = "${GREEN}Banned %s: ${YELLOW}%s"
@@ -20,6 +19,7 @@ class Message_en_US: Message("en_US") {
     override val unbannedPlayer = "${GREEN}Unbanned %s."
     override val warnedPlayer = "${GREEN}Warned %s: ${RED}%s"
     override val error = "${RED}An internal error occurred while handling command. Please try again later. (%s)"
+    override val offlineMode = "${RED}Server is in offline mode. You must set the online-mode to true or bungeecord (in spigot.yml) to true"
 
     override val country = "Country"
     override val playerName = "Player Name"
