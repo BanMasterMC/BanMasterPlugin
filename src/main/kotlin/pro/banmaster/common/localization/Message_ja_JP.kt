@@ -9,6 +9,7 @@ class Message_ja_JP: Message("ja_JP") {
     override val noPlayer = "${RED}プレイヤーが見つかりません。"
     override val missingPermission = "${RED}権限がありません。"
     override val banUsage = "${YELLOW}/ban <プレイヤー> [<時間> <m/h/d>] <理由>"
+    override val tbanUsage = "${YELLOW}/tban <プレイヤー> <時間> <m/h/d> <理由>"
     override val gbanUsage = "${YELLOW}/gban <プレイヤー> <理由>"
     override val unbanUsage = "${YELLOW}/gban <プレイヤー>"
     override val whoisUsage = "${YELLOW}/whois <プレイヤー>"
@@ -19,6 +20,7 @@ class Message_ja_JP: Message("ja_JP") {
     override val unbannedPlayer = "${GREEN}%sのBANを解除しました。"
     override val warnedPlayer = "${GREEN}%sを警告しました: ${RED}%s"
     override val error = "${RED}コマンドを実行中に内部エラーが発生しました。あとでもう一度やり直してください。 (%s)"
+    override val timeNotSpecified = "${RED}時間が指定されていません。"
     override val offlineMode = "${RED}サーバーはオフラインモードです。online-modeをtrueにするか、bungeecord(spigot.yml内)をtrueにする必要があります。"
 
     override val country = "地域"

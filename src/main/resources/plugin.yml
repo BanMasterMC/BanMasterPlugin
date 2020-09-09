@@ -6,6 +6,7 @@ commands:
     permission: "banmaster.banmaster"
   ban:
     permission: "banmaster.ban"
+    aliases: ["tban"]
   gban:
     permission: "banmaster.gban"
   unban:

@@ -9,6 +9,7 @@ class Message_en_US: Message("en_US") {
     override val noPlayer = "${RED}Could not find player."
     override val missingPermission = "${RED}You don't have permission to do this."
     override val banUsage = "${YELLOW}/ban <Player> [<time> <m/h/d>] <Reason>"
+    override val tbanUsage = "${YELLOW}/tban <Player> <Time> <m/h/d> <Reason>"
     override val gbanUsage = "${YELLOW}/gban <Player> <Reason>"
     override val unbanUsage = "${YELLOW}/unban <Player>"
     override val whoisUsage = "${YELLOW}/whois <Player>"
@@ -19,6 +20,7 @@ class Message_en_US: Message("en_US") {
     override val unbannedPlayer = "${GREEN}Unbanned %s."
     override val warnedPlayer = "${GREEN}Warned %s: ${RED}%s"
     override val error = "${RED}An internal error occurred while handling command. Please try again later. (%s)"
+    override val timeNotSpecified = "${RED}Time isn't specified."
     override val offlineMode = "${RED}Server is in offline mode. You must set the online-mode to true or bungeecord (in spigot.yml) to true"
 
     override val country = "Country"

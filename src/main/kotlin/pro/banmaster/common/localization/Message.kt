@@ -35,6 +35,9 @@ abstract class Message(language: String) {
         val BAN_USAGE: String
             get() = mapping[language]!!.banUsage
 
+        val TBAN_USAGE: String
+            get() = mapping[language]!!.tbanUsage
+
         val GBAN_USAGE: String
             get() = mapping[language]!!.gbanUsage
 
@@ -67,6 +70,9 @@ abstract class Message(language: String) {
 
         val ERROR: String
             get() = mapping[language]!!.error
+
+        val TIME_NOT_SPECIFIED: String
+            get() = mapping[language]!!.timeNotSpecified
 
         val OFFLINE_MODE: String
             get() = mapping[language]!!.offlineMode
@@ -107,6 +113,7 @@ abstract class Message(language: String) {
     abstract val noPlayer: String
     abstract val missingPermission: String
     abstract val banUsage: String
+    abstract val tbanUsage: String
     abstract val gbanUsage: String
     abstract val unbanUsage: String
     abstract val whoisUsage: String
@@ -117,6 +124,7 @@ abstract class Message(language: String) {
     abstract val unbannedPlayer: String
     abstract val warnedPlayer: String
     abstract val error: String
+    abstract val timeNotSpecified: String
     abstract val offlineMode: String
 
     abstract val country: String

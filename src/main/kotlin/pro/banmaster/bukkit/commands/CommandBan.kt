@@ -34,7 +34,7 @@ class CommandBan: CommandExecutor {
             }
             if (args.size < 2) {
                 sender.sendMessage(Message.INVALID_ARGUMENT)
-                sender.sendMessage(Message.BAN_USAGE)
+                sender.sendMessage(if (label.equals("tban", true)) Message.TBAN_USAGE else Message.BAN_USAGE)
                 return@t
             }
             val player = args[0]
@@ -66,6 +66,10 @@ class CommandBan: CommandExecutor {
                     }
                     if (expiresAt != -1L) arg.shiftChain().shiftChain()
                 }
+            }
+            if (label.equals("tban", true) && expiresAt == -1L) {
+                sender.sendMessage(Message.TIME_NOT_SPECIFIED)
+                return@t
             }
             val reason = arg.join(" ")
             val kick: String
