@@ -55,6 +55,7 @@ class BanMasterPlugin: BanMasterAPIImpl() {
         Bukkit.getPluginCommand("unban").executor = CommandUnban()
         Bukkit.getPluginCommand("whois").executor = CommandWhois()
         Bukkit.getPluginCommand("warn").executor = CommandWarn()
+        Bukkit.getPluginCommand("proof").executor = CommandProof()
     }
 
     private fun reload() {

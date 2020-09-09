@@ -8,6 +8,7 @@ class Message_en_US: Message("en_US") {
     override val invalidArgument = "${RED}Invalid arguments."
     override val noPlayer = "${RED}Could not find player."
     override val missingPermission = "${RED}You don't have permission to do this."
+    override val proofUsage = "${YELLOW}/proof <Player> <URL of the proof>"
     override val banUsage = "${YELLOW}/ban <Player> [<time> <m/h/d>] <Reason>"
     override val tbanUsage = "${YELLOW}/tban <Player> <Time> <m/h/d> <Reason>"
     override val gbanUsage = "${YELLOW}/gban <Player> <Reason>"
@@ -22,6 +23,8 @@ class Message_en_US: Message("en_US") {
     override val error = "${RED}An internal error occurred while handling command. Please try again later. (%s)"
     override val timeNotSpecified = "${RED}Time isn't specified."
     override val offlineMode = "${RED}Server is in offline mode. You must set the online-mode to true or bungeecord (in spigot.yml) to true"
+    override val proofSubmitted = "${GREEN}Submitted proof for %s. (${YELLOW}%s${GREEN})"
+    override val invalidUrl = "${RED}Invalid URL."
 
     override val country = "Country"
     override val playerName = "Player Name"

@@ -13,7 +13,10 @@ commands:
     permission: "banmaster.unban"
   whois:
     permission: "banmaster.whois"
-    aliases: "lookup"
+    aliases: ["lookup", "bancheck"]
   warn:
     permission: "banmaster.warn"
     aliases: "warning"
+  proof:
+    permission: "banmaster.proof"
+    aliases: ["sendproof"]

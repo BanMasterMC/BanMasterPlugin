@@ -8,6 +8,7 @@ class Message_ja_JP: Message("ja_JP") {
     override val invalidArgument = "${RED}引数が無効です。"
     override val noPlayer = "${RED}プレイヤーが見つかりません。"
     override val missingPermission = "${RED}権限がありません。"
+    override val proofUsage = "${YELLOW}/proof <プレイヤー> <証拠URL>"
     override val banUsage = "${YELLOW}/ban <プレイヤー> [<時間> <m/h/d>] <理由>"
     override val tbanUsage = "${YELLOW}/tban <プレイヤー> <時間> <m/h/d> <理由>"
     override val gbanUsage = "${YELLOW}/gban <プレイヤー> <理由>"
@@ -22,6 +23,8 @@ class Message_ja_JP: Message("ja_JP") {
     override val error = "${RED}コマンドを実行中に内部エラーが発生しました。あとでもう一度やり直してください。 (%s)"
     override val timeNotSpecified = "${RED}時間が指定されていません。"
     override val offlineMode = "${RED}サーバーはオフラインモードです。online-modeをtrueにするか、bungeecord(spigot.yml内)をtrueにする必要があります。"
+    override val proofSubmitted = "${GREEN}%sに対しての証拠を提出しました。 (${YELLOW}%s${GREEN})"
+    override val invalidUrl = "${RED}URLが正しくありません。"
 
     override val country = "地域"
     override val playerName = "プレイヤー名"

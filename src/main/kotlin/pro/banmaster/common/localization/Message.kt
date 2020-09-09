@@ -32,6 +32,9 @@ abstract class Message(language: String) {
         val MISSING_PERMISSION: String
             get() = mapping[language]!!.missingPermission
 
+        val PROOF_USAGE: String
+            get() = mapping[language]!!.proofUsage
+
         val BAN_USAGE: String
             get() = mapping[language]!!.banUsage
 
@@ -77,6 +80,12 @@ abstract class Message(language: String) {
         val OFFLINE_MODE: String
             get() = mapping[language]!!.offlineMode
 
+        val PROOF_SUBMITTED: String
+            get() = mapping[language]!!.proofSubmitted
+
+        val INVALID_URL: String
+            get() = mapping[language]!!.invalidUrl
+
 
         val COUNTRY: String
             get() = mapping[language]!!.country
@@ -112,6 +121,7 @@ abstract class Message(language: String) {
     abstract val invalidArgument: String
     abstract val noPlayer: String
     abstract val missingPermission: String
+    abstract val proofUsage: String
     abstract val banUsage: String
     abstract val tbanUsage: String
     abstract val gbanUsage: String
@@ -126,6 +136,8 @@ abstract class Message(language: String) {
     abstract val error: String
     abstract val timeNotSpecified: String
     abstract val offlineMode: String
+    abstract val proofSubmitted: String
+    abstract val invalidUrl: String
 
     abstract val country: String
     abstract val playerName: String
