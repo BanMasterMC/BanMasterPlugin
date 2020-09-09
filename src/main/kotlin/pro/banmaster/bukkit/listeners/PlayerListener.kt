@@ -8,22 +8,21 @@ import pro.banmaster.api.rest.free.player.APIGetUser
 import pro.banmaster.api.rest.misc.APIJoin
 import pro.banmaster.bukkit.BanMasterPlugin
 import pro.banmaster.bukkit.BanMasterPlugin.Companion.saveIp
-import pro.banmaster.common.struct.timestampToDay
 import util.CollectionList
 
 class PlayerListener: Listener {
     @EventHandler
-    fun onAsyncPlayerPreLogin(e: AsyncPlayerPreLoginEvent) {
+    fun onAsyncPlayerPreLogin(e: AsyncPlayerPreLoginEvent) { // todo: localization
         if (BanMasterPlugin.invalidToken) {
             val player = APIGetUser(e.uniqueId).execute().complete()
-            if (player.strike_expire_at != null && player.strike_expire_at!! > 0L) {
+            if (player.strike_expire_at != null && player.strike_expire_at!! == 0L) {
                 val list = CollectionList<String>()
-                val currentTimestamp = System.currentTimeMillis()
-                list.add("${ChatColor.RED}現在あなたは処罰が期限切れになっていないため参加できません。")
-                list.add("")
-                list.add("${ChatColor.GRAY}処罰解除まであと${ChatColor.WHITE}${(player.strike_expire_at!! - currentTimestamp).timestampToDay()}")
+                list.add("${ChatColor.RED}現在あなたはグローバルBAN(永久)されているため参加できません。")
                 list.add("")
                 list.add("${ChatColor.GRAY}ユーザーID: ${ChatColor.WHITE}${player.id}")
+                list.add("")
+                list.add("${ChatColor.GRAY}異議申し立て: ${ChatColor.AQUA}https://banmaster.pro")
+                list.add("${ChatColor.GRAY}※8日以上経過すると異議申し立てができなくなります。")
                 e.disallow(AsyncPlayerPreLoginEvent.Result.KICK_OTHER, list.join("\n"))
             }
         } else {

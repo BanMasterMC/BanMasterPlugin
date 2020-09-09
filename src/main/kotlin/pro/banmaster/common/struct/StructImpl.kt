@@ -2,6 +2,7 @@ package pro.banmaster.common.struct
 
 import org.bukkit.ChatColor
 import pro.banmaster.api.struct.*
+import pro.banmaster.bukkit.BanMasterPlugin.Companion.debug
 import pro.banmaster.bukkit.commands.CommandBan
 import util.CollectionList
 import java.util.*
@@ -215,25 +216,21 @@ class BanImpl(
         //fun getById(id: Int): Promise<Ban?> = SqlUtils.getBanById(id)
     }
 
+    // todo: localization
     override fun getKickMessage(): String {
         val list = CollectionList<String>()
         val currentTimestamp = System.currentTimeMillis()
-        if (player.strike_expire_at != null) {
-            val perm: Boolean
-            if (player.strike_expire_at!! == 0L) {
-                list.add("${ChatColor.RED}現在あなたはGlobal BANを2回されているため永久的にBANされています。")
-                perm = true
-            } else {
-                list.add("${ChatColor.RED}現在あなたは処罰が期限切れになっていないため参加できません。")
-                perm = false
-            }
+        if (player.strike_expire_at != null && player.strike_expire_at!! == 0L) {
+            list.add("${ChatColor.RED}現在あなたはGlobal BANを2回されているため永久的にBANされています。")
             list.add("${ChatColor.GRAY}理由: ${ChatColor.WHITE}${reason}")
             list.add("")
             list.add("${ChatColor.GRAY}種類: ${ChatColor.WHITE}${if (type == BanType.GLOBAL) "${ChatColor.RED}Global" else "${ChatColor.YELLOW}Local"}")
             list.add("")
-            if (!perm) list.add("${ChatColor.GRAY}処罰解除まであと${ChatColor.WHITE}${(player.strike_expire_at!! - currentTimestamp).timestampToDay()}")
-            if (!perm) list.add("")
-            list.add("${ChatColor.GRAY}ユーザーID: ${ChatColor.WHITE}${player.id} ${ChatColor.GRAY}| 処罰ID: ${ChatColor.WHITE}${id}")
+            val debug = if (debug) "${ChatColor.GRAY}ユーザーID: ${ChatColor.WHITE}${player.id} ${ChatColor.GRAY}| " else ""
+            list.add("${debug}${ChatColor.GRAY}処罰ID: ${ChatColor.WHITE}${id}")
+            list.add("")
+            list.add("${ChatColor.GRAY}異議申し立て: ${ChatColor.AQUA}https://banmaster.pro/miyayu_is_hentai/${id}")
+            list.add("${ChatColor.GRAY}※8日以上経過すると異議申し立てができなくなります。")
             return list.join("\n")
         }
         val perm = expiresAt <= 0

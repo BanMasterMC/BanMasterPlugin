@@ -47,7 +47,7 @@ class BanMasterPlugin: BanMasterAPIImpl() {
             throw RuntimeException()
         }
         config.options().copyDefaults(true)
-        conflicts("MCBans", "コマンドの競合")
+        conflicts("MCBans", "コマンドの競合") // todo: localization
         Bukkit.getServicesManager().register(BanMasterAPI::class.java, this, this, ServicePriority.Normal)
         Bukkit.getPluginManager().registerEvents(PlayerListener(), this)
         Bukkit.getPluginCommand("ban").executor = CommandBan()
@@ -85,6 +85,6 @@ class BanMasterPlugin: BanMasterAPIImpl() {
 
     private fun conflicts(plugin: String, reason: String) {
         if (Bukkit.getPluginManager().getPlugin(plugin) != null)
-            throw RuntimeException("'$plugin'はこのプラグインとは非対応です。${plugin}を削除してサーバーを再起動してください。(理由: $reason)")
+            throw RuntimeException("'$plugin'はこのプラグインとは非対応です。${plugin}を削除してサーバーを再起動してください。(理由: $reason)") // todo: localization
     }
 }
