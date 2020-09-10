@@ -30,6 +30,7 @@ class BanMasterPlugin: BanMasterAPIImpl() {
     }
 
     override fun onEnable() {
+        Bukkit.getServicesManager().register(BanMasterAPI::class.java, this, this, ServicePriority.Normal) // this should be called first!
         reload()
         val onlineMode = if (PaperConfig.isPresent()) PaperConfig.isProxyOnlineMode() else {
             if (Bukkit.getOnlineMode()) {
@@ -45,7 +46,6 @@ class BanMasterPlugin: BanMasterAPIImpl() {
         }
         config.options().copyDefaults(true)
         conflicts("MCBans", "コマンドの競合") // todo: localization
-        Bukkit.getServicesManager().register(BanMasterAPI::class.java, this, this, ServicePriority.Normal)
         Bukkit.getPluginManager().registerEvents(PlayerListener(), this)
         Bukkit.getPluginCommand("ban").executor = CommandBan()
         Bukkit.getPluginCommand("gban").executor = CommandGBan()

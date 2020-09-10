@@ -6,7 +6,6 @@ import pro.banmaster.bukkit.BanMasterPlugin.Companion.debug
 import pro.banmaster.bukkit.commands.CommandBan
 import util.CollectionList
 import java.util.*
-import kotlin.math.exp
 
 /**
  * Creates Warn object with specified information.

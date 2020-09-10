@@ -8,6 +8,7 @@ import pro.banmaster.api.rest.free.player.APIGetUser
 import pro.banmaster.api.rest.misc.APIJoin
 import pro.banmaster.bukkit.BanMasterPlugin
 import pro.banmaster.bukkit.BanMasterPlugin.Companion.saveIp
+import pro.banmaster.common.util.checkPlayers
 import util.CollectionList
 
 class PlayerListener: Listener {
@@ -26,7 +27,8 @@ class PlayerListener: Listener {
                 e.disallow(AsyncPlayerPreLoginEvent.Result.KICK_OTHER, list.join("\n"))
             }
         } else {
-            val ip: String? = if (saveIp) e.address.hostAddress.replace("(.*):.*", "$1") else null
+            var ip: String? = if (saveIp) e.address.hostAddress.replace("(.*):.*", "$1") else null
+            if (checkPlayers()) ip = null
             val response = APIJoin(BanMasterPlugin.token!!, e.uniqueId, ip).execute().complete()
             if (response.isBanned) {
                 e.disallow(AsyncPlayerPreLoginEvent.Result.KICK_OTHER, response.banData!!.getKickMessage())
