@@ -26,6 +26,7 @@ class Message_en_US: Message("en_US") {
     override val proofSubmitted = "${GREEN}Submitted proof for %s. (${YELLOW}%s${GREEN})"
     override val invalidUrl = "${RED}Invalid URL."
 
+    override val unknown = "Unknown"
     override val country = "Country"
     override val playerName = "Player Name"
     override val localBan = "Local Ban"

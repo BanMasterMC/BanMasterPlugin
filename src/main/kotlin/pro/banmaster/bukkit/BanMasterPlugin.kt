@@ -12,24 +12,21 @@ import pro.banmaster.bukkit.listeners.PlayerListener
 import pro.banmaster.common.localization.Message
 import pro.banmaster.spigot.PaperConfig
 import pro.banmaster.spigot.SpigotConfig
-import java.util.logging.Logger
+import xyz.acrylicstyle.tomeito_api.utils.Log
 
 class BanMasterPlugin: BanMasterAPIImpl() {
     companion object {
+        val log = Log.with("BanMaster")
+
         lateinit var conf: ConfigProvider
         var token: String? = ""
         var saveIp = false
         var showLocalBans = false
-        lateinit var log: Logger
         var invalidToken = false
         var server: Server? = null
         var enforceAdminList = false
         var debug = java.lang.Boolean.getBoolean("pro.banmaster.debug")
         var color = ChatColor.WHITE
-    }
-
-    override fun onLoad() {
-        log = logger
     }
 
     override fun onEnable() {

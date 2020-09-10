@@ -26,6 +26,7 @@ class Message_ja_JP: Message("ja_JP") {
     override val proofSubmitted = "${GREEN}%sに対しての証拠を提出しました。 (${YELLOW}%s${GREEN})"
     override val invalidUrl = "${RED}URLが正しくありません。"
 
+    override val unknown = "不明"
     override val country = "地域"
     override val playerName = "プレイヤー名"
     override val localBan = "ローカルBAN"

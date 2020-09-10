@@ -87,6 +87,9 @@ abstract class Message(language: String) {
             get() = mapping[language]!!.invalidUrl
 
 
+        val UNKNOWN: String
+            get() = mapping[language]!!.unknown
+
         val COUNTRY: String
             get() = mapping[language]!!.country
 
@@ -139,6 +142,7 @@ abstract class Message(language: String) {
     abstract val proofSubmitted: String
     abstract val invalidUrl: String
 
+    abstract val unknown: String
     abstract val country: String
     abstract val playerName: String
     abstract val localBan: String

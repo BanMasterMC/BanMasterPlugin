@@ -10,7 +10,7 @@ enforceAdminList: false
 # Whether the plugin will try to save players' IP address.
 # This setting will be ignored and set to false if the 80%+ players in the server is using the same IP.
 # If you're using traditional Reverse proxy, consider using HAProxy.
-save-ip: false
+save-ip: true
 
 show-local-bans: false
 
