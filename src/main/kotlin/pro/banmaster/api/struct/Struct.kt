@@ -1,9 +1,12 @@
 package pro.banmaster.api.struct
 
+import org.bukkit.ChatColor
 import org.json.JSONObject
 import pro.banmaster.api.BanMasterAPI
 import util.JSONAPI
 import java.util.*
+
+infix operator fun ChatColor.plus(s: String): String = this.toString() + s
 
 fun preprocessResponse(response: JSONAPI.Response<JSONObject>) {
     if (response.responseCode != 200) throw RuntimeException("Response Code isn't OK: ${response.responseCode} (${response.rawResponse})")

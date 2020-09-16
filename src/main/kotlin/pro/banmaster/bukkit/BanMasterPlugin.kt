@@ -10,7 +10,7 @@ import pro.banmaster.bukkit.commands.*
 import pro.banmaster.bukkit.config.ConfigProvider
 import pro.banmaster.bukkit.listeners.PlayerListener
 import pro.banmaster.common.localization.Message
-import pro.banmaster.spigot.PaperConfig
+import pro.banmaster.paper.PaperConfig
 import pro.banmaster.spigot.SpigotConfig
 import xyz.acrylicstyle.tomeito_api.utils.Log
 

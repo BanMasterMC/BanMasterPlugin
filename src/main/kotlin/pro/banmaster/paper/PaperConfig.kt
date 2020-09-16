@@ -1,4 +1,4 @@
-package pro.banmaster.spigot
+package pro.banmaster.paper
 
 object PaperConfig {
     private fun getBoolean(field: String): Boolean = Class.forName("com.destroystokyo.paper.PaperConfig").getField(field).getBoolean(null)
